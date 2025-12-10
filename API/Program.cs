@@ -13,10 +13,14 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     );
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// 跨域：允许任何头、允许任何方法、允许的来源
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+    .WithOrigins("http://localhost:3000","https://localhost:3000"));
 app.MapControllers();
 
 app.Run();
